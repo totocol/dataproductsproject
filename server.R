@@ -19,7 +19,7 @@ shinyServer(
       
       # Extract input values
       year <- input$year
-      sex  <- input$gender
+      gender  <- input$gender
       number    <- input$number
       
       output$year <- renderPrint(year)

@@ -1,33 +1,17 @@
 library(ggplot2)
 
 # load the data sets
-boys  <- read.csv("data/boys.csv")
-girls <- read.csv("data/girls.csv")
+boys_data  <- read.csv("data/boys.csv")
+girls_data <- read.csv("data/girls.csv")
 
-# Function to pre-process the data
-preProcess <- function(sex){
+#Function to get the names based on the gender, n rank and year
+getNames <- function(gender, n, year) {
   
   # extract the relevant information based on user choice
-  if (sex == "boys"){
-    data <- boys
-  }
-  if (sex == "girls"){
-    data <- girls
-  }
-  
-
-
-# pre-process both the data sets
-boys_data <- preProcess("boys")
-girls_data <- preProcess("girls")
-
-getNames <- function(sex, n, year) {
-  
-  # extract the relevant information based on user choice
-  if (sex == "boys"){
+  if (gender == "boys"){
     data <- boys_data
   }
-  if (sex == "girls"){
+  if (gender == "girls"){
     data <- girls_data
   }
   
@@ -45,5 +29,4 @@ getNames <- function(sex, n, year) {
   p1 + geom_line(aes(colour = Name, group = Name)) + 
     labs(title = 'Most Popular Baby Names 2009 - 2013',
          y = 'Number of babies', x = 'Year', fill = 'Name')
-}
 }

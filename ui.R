@@ -4,14 +4,16 @@ library(shiny)
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Names of babies in South Australia for period 1944-2013"),
+  titlePanel("Popular names for babies in South Australia for period 2009-2013"),
   
   # Sidebar with a slider input for the mean, sd and obs
   sidebarLayout(
     sidebarPanel(
       
       
-      p("You can find what the most popular names for babies were for the years between 1944 and 2013."),
+      p("You can find the top 100 most popular names for babies in South Australia between 2009 and 2013. 
+        Select the gender, year, and rank. You will see the name in that position for that year and gender. 
+        You will also see how that name has changed between 2009 and 2013"),
       
       sliderInput("year",
                   "Year:",
@@ -22,7 +24,7 @@ shinyUI(fluidPage(
       sliderInput("number",
                   "Number:",
                   min = 1,
-                  max = 20,
+                  max = 100,
                   value = 1),
       
       selectInput(inputId = "gender",
@@ -41,7 +43,7 @@ shinyUI(fluidPage(
     mainPanel(
        plotOutput("distPlot")
 #       verbatimTextOutput("year"),
-#       verbatimTextOutput("sex"),
+#       verbatimTextOutput("gender"),
 #       verbatimTextOutput("number")
     )
   )
