@@ -1,0 +1,73 @@
+Popular Baby Names in South Australia in the Period 2009 - 2013 
+========================================================
+author: Raul Caceres
+date: April 18, 2015
+
+Why are names important? 
+========================================================
+
+Research shows that names can determine success in life. Research shows a few important points: 
+
+- Research carried out by the New York University's Stern School found that easy to pronounce names made people more likable and successful 
+- Names that are too eccentric can lead to children being bullied at school 
+- For some children, having others with the same name can help them feel more secure
+
+Helping parents choose popular names
+========================================================
+
+I have created this very useful application using open government data from the government of South Australia to help parents choose based on the top 100 most popular names for baby boys and baby girls
+```{r, echo=FALSE}
+library(ggplot2)
+
+# load the data sets
+boys_data  <- read.csv("data/boys.csv")
+girls_data <- read.csv("data/girls.csv")
+
+#Function to get the names based on the gender, n rank and year
+getNames <- function(gender, n, year) {
+  
+  # Choose wether to use the baby boys data or the baby girls data
+  if (gender == "boys"){
+    data <- boys_data
+  }
+  if (gender == "girls"){
+    data <- girls_data
+  }
+  
+  # get the names for the top n ranks for a specific year
+  DF <- with(data, subset(data, Year == year & Rank == n))
+  names <- DF$Name
+  
+  # subset the data across the 5 years
+  DF1 <- with(data, subset(data, Name %in% names))
+  
+  # Plot
+  p1 <- ggplot(data = DF1, aes(x = Year, y = Number, fill = Name))
+  
+  # Show how the data has changed for the selected name across those years
+  p1 + geom_line(aes(colour = Name, group = Name)) + 
+    labs(title = 'Most Popular Baby Names 2009 - 2013',
+         y = 'Number of babies', x = 'Year', fill = 'Name')
+}
+
+```
+```{r}
+head(boys_data)
+```
+
+
+How to use the baby names application
+========================================================
+!["app""](babynamesapp.png)<br>
+To make use of the app you need to follow 3 very easy steps
+- Select the year you want to explore
+- Select the rank of the name you want to see
+- Select if you want to explore baby boys or baby girls names
+
+About this application
+========================================================
+This application was prepared using <a href="https://data.sa.gov.au/dataset/popular-baby-names">open government data</a> from South Australia.<br>
+You can see the live application at https://totocol.shinyapps.io/dataproductsproject/ <br>
+This was also prepared as part of the Data Scientist course from Coursera. Thanks for all the learning! 
+
+publish(title = 'Coursera', 'index.html', host = 'rpubs')
